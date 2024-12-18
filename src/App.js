@@ -1,4 +1,4 @@
-import "./App.css";
+// import "./App.css";
 import { useState } from "react";
 
 // One-way-binding, two-way-binding
@@ -20,17 +20,26 @@ const courses = [
 ];
 
 function App() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [checked, setChecked] = useState();
+  const handleSubmit = () => {};
 
-  const handleSubmit = () => {
-    console.log(name, email);
-  };
+  console.log(checked);
 
   return (
     <div className="App">
-      <input onChange={(e) => setName(e.target.value)} value={name}></input>
-      <input onChange={(e) => setEmail(e.target.value)} value={email}></input>
+      {courses.map((course) => (
+        <div key={course.id}>
+          <input
+            type="radio"
+            checked={checked === course.id}
+            onChange={() => {
+              setChecked(course.id);
+            }}
+          />
+          {course.name}
+        </div>
+      ))}
+
       <button onClick={handleSubmit}>Register</button>
     </div>
   );
