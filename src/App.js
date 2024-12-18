@@ -4,22 +4,27 @@ import { useState } from "react";
 const orders = [100, 200, 300];
 
 function App() {
-  // Chỉ lấy lần đầu tiên thôi
-  const [counter, setCounter] = useState(() => {
-    const total = orders.reduce((total, cur) => total + cur);
-    return total;
+  const [info, setInfo] = useState({
+    name: "Nguyễn Văn A",
+    age: 18,
+    address: "Ha Noi, VN",
   });
 
-  const handleIncrease = () => {
-    // Xong sẽ gọi lại hàm app
-    // setCounter(counter + 1);
-    setCounter(counter + 1);
+  const handleUpdate = () => {
+    setInfo((prev) => {
+      // Logic
+
+      return {
+        ...prev,
+        bio: "Yêu màu hồng",
+      };
+    });
   };
 
   return (
     <div className="App">
-      <h1>{counter}</h1>
-      <button onClick={handleIncrease}>Increase</button>
+      <h1>{JSON.stringify(info)}</h1>
+      <button onClick={handleUpdate}>Increase</button>
     </div>
   );
 }
