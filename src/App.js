@@ -3,20 +3,35 @@ import { useState } from "react";
 
 // One-way-binding, two-way-binding
 
-const gifts = ["CPU i9", "RAM 32GB RGB", "RGB Keyboard"];
+// Respond from API
+const courses = [
+  {
+    id: 1,
+    name: "HTML, CSS",
+  },
+  {
+    id: 2,
+    name: "JavaScript",
+  },
+  {
+    id: 3,
+    name: "ReactJS",
+  },
+];
 
 function App() {
-  const [gift, setGift] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
-  const randomGift = () => {
-    const index = Math.floor(Math.random() * gifts.length);
-    setGift(gifts[index]);
+  const handleSubmit = () => {
+    console.log(name, email);
   };
 
   return (
     <div className="App">
-      <h1>{gift || "Chưa có phần thưởng"}</h1>
-      <button onClick={randomGift}>Lấy thưởng</button>
+      <input onChange={(e) => setName(e.target.value)} value={name}></input>
+      <input onChange={(e) => setEmail(e.target.value)} value={email}></input>
+      <button onClick={handleSubmit}>Register</button>
     </div>
   );
 }
