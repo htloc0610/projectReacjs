@@ -1,30 +1,22 @@
 import "./App.css";
 import { useState } from "react";
 
-const orders = [100, 200, 300];
+// One-way-binding, two-way-binding
+
+const gifts = ["CPU i9", "RAM 32GB RGB", "RGB Keyboard"];
 
 function App() {
-  const [info, setInfo] = useState({
-    name: "Nguyễn Văn A",
-    age: 18,
-    address: "Ha Noi, VN",
-  });
+  const [gift, setGift] = useState();
 
-  const handleUpdate = () => {
-    setInfo((prev) => {
-      // Logic
-
-      return {
-        ...prev,
-        bio: "Yêu màu hồng",
-      };
-    });
+  const randomGift = () => {
+    const index = Math.floor(Math.random() * gifts.length);
+    setGift(gifts[index]);
   };
 
   return (
     <div className="App">
-      <h1>{JSON.stringify(info)}</h1>
-      <button onClick={handleUpdate}>Increase</button>
+      <h1>{gift || "Chưa có phần thưởng"}</h1>
+      <button onClick={randomGift}>Lấy thưởng</button>
     </div>
   );
 }
