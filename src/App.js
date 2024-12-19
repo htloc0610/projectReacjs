@@ -1,39 +1,16 @@
 import "./App.css";
+import Content from "./Content";
 import { useState } from "react";
 
+// Mounted/ UnMounted
+
 function App() {
-  const [list, listState] = useState(() => {
-    const savedJobs = JSON.parse(localStorage.getItem("Jobs")) ?? [];
-    console.log("Loaded jobs from localStorage:", savedJobs);
-    return savedJobs;
-  });
-  const [input, inputState] = useState("");
-
-  const changeAction = () => {
-    listState((prev) => {
-      const newJobs = [...prev, input];
-
-      const jsonJobs = JSON.stringify(newJobs);
-
-      console.log(jsonJobs);
-
-      localStorage.setItem("Jobs", jsonJobs);
-
-      return newJobs;
-    });
-    inputState("");
-  };
+  const [show, setShow] = useState(false);
 
   return (
     <div className="App">
-      <input value={input} onChange={(e) => inputState(e.target.value)} />
-      <button onClick={changeAction}>Add</button>
-
-      <ul>
-        {list.map((part, index) => (
-          <li key={index}>{part}</li>
-        ))}
-      </ul>
+      <button onClick={() => setShow(!show)}>Toggle</button>
+      {show && <Content />}
     </div>
   );
 }
