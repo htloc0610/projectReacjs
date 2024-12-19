@@ -1,4 +1,4 @@
-// import "./App.css";
+import "./App.css";
 import { useState } from "react";
 
 // One-way-binding, two-way-binding
@@ -20,21 +20,30 @@ const courses = [
 ];
 
 function App() {
-  const [checked, setChecked] = useState();
-  const handleSubmit = () => {};
+  const [checked, setChecked] = useState([]);
+  const handleSubmit = () => {
+    console.log({ ids: checked });
+  };
 
   console.log(checked);
+
+  const handleCheck = (id) => {
+    setChecked((prev) => {
+      if (prev.includes(id)) {
+        return prev.filter((item) => item !== id).sort();
+      }
+      return [...prev, id].sort();
+    });
+  };
 
   return (
     <div className="App">
       {courses.map((course) => (
         <div key={course.id}>
           <input
-            type="radio"
-            checked={checked === course.id}
-            onChange={() => {
-              setChecked(course.id);
-            }}
+            type="checkbox"
+            checked={checked.includes(course.id)}
+            onChange={() => handleCheck(course.id)}
           />
           {course.name}
         </div>
