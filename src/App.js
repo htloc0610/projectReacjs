@@ -1,55 +1,39 @@
 import "./App.css";
 import { useState } from "react";
 
-// One-way-binding, two-way-binding
-
-// Respond from API
-const courses = [
-  {
-    id: 1,
-    name: "HTML, CSS",
-  },
-  {
-    id: 2,
-    name: "JavaScript",
-  },
-  {
-    id: 3,
-    name: "ReactJS",
-  },
-];
-
 function App() {
-  const [checked, setChecked] = useState([]);
-  const handleSubmit = () => {
-    console.log({ ids: checked });
-  };
+  const [list, listState] = useState(() => {
+    const savedJobs = JSON.parse(localStorage.getItem("Jobs")) ?? [];
+    console.log("Loaded jobs from localStorage:", savedJobs);
+    return savedJobs;
+  });
+  const [input, inputState] = useState("");
 
-  console.log(checked);
+  const changeAction = () => {
+    listState((prev) => {
+      const newJobs = [...prev, input];
 
-  const handleCheck = (id) => {
-    setChecked((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id).sort();
-      }
-      return [...prev, id].sort();
+      const jsonJobs = JSON.stringify(newJobs);
+
+      console.log(jsonJobs);
+
+      localStorage.setItem("Jobs", jsonJobs);
+
+      return newJobs;
     });
+    inputState("");
   };
 
   return (
     <div className="App">
-      {courses.map((course) => (
-        <div key={course.id}>
-          <input
-            type="checkbox"
-            checked={checked.includes(course.id)}
-            onChange={() => handleCheck(course.id)}
-          />
-          {course.name}
-        </div>
-      ))}
+      <input value={input} onChange={(e) => inputState(e.target.value)} />
+      <button onClick={changeAction}>Add</button>
 
-      <button onClick={handleSubmit}>Register</button>
+      <ul>
+        {list.map((part, index) => (
+          <li key={index}>{part}</li>
+        ))}
+      </ul>
     </div>
   );
 }
